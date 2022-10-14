@@ -14,7 +14,7 @@
 	
 
 		$("#validateForm").hide();
-		$("#aftervalidateTextarea").hide();
+		$(".monitorData").hide();
 		
 		$("#frmAction").on("submit", function(event){
 			event.preventDefault();
@@ -40,27 +40,74 @@
 			var formValues= $(this).serialize();
 			var actionUrl = 'http://localhost:3000/api/postdata';
 	 
-			$.post(actionUrl, formValues, function(data){
+			$.post(actionUrl, formValues, function(data1){
 				// Display the returned data in browser
 				
-				$("#monitorData").show();		
-				var data = [{
-				    id: 1,
-				    name: 'Item 1',
-				    price: '100'
-				}, {
-				    id: 2,
-				    name: 'Item 2',
-				    price: '200'
-				}]
-				for(var i=0;i<data.length;i++)
+				$(".monitorData").show();		
+				var data = {
+						"data1":
+								  [
+									{
+										id: 1,
+										name: 'Item 1',
+										price: '100'
+									}, {
+										id: 2,
+										name: 'Item 2',
+										price: '200'
+									}
+								  ],
+						"data2":
+								  [
+									{
+										id: 1,
+										name: 'data 2 Item 1',
+										price: '100'
+									}, {
+										id: 2,
+										name: 'data 2 Item 2',
+										price: '200'
+									}
+								  ],
+						"data3":
+								  [
+									{
+										id: 1,
+										name: 'data 3 Item 1',
+										price: '100'
+									}, {
+										id: 2,
+										name: 'data 3 Item 2',
+										price: '200'
+									}
+								  ]
+			  
+					}
+				for(var i=0;i<data.data1.length;i++)
 				{
 					var tr="<tr>";
-					var td1="<td>"+data[i]["id"]+"</td>";
-					var td2="<td>"+data[i]["name"]+"</td>";
-					var td3="<td>"+data[i]["price"]+"</td></tr>";
+					var td1="<td>"+data.data1[i]["id"]+"</td>";
+					var td2="<td>"+data.data1[i]["name"]+"</td>";
+					var td3="<td>"+data.data1[i]["price"]+"</td></tr>";
 				   $("#data-body").append(tr+td1+td2+td3); 
 				}  
+				for(var i=0;i<data.data2.length;i++)
+				{
+					var tr="<tr>";
+					var td1="<td>"+data.data2[i]["id"]+"</td>";
+					var td2="<td>"+data.data2[i]["name"]+"</td>";
+					var td3="<td>"+data.data2[i]["price"]+"</td></tr>";
+				   $("#data-body2").append(tr+td1+td2+td3); 
+				}  
+				for(var i=0;i<data.data3.length;i++)
+				{
+					var tr="<tr>";
+					var td1="<td>"+data.data3[i]["id"]+"</td>";
+					var td2="<td>"+data.data3[i]["name"]+"</td>";
+					var td3="<td>"+data.data3[i]["price"]+"</td></tr>";
+				   $("#data-body3").append(tr+td1+td2+td3); 
+				}  
+			
 			
 			});
 		});
@@ -73,7 +120,7 @@
 
   <form id="frmAction" class="form-group">
     <div class="col-md-3 md-4">
-		<select id="mySelect"  name="singleoption" class="form-control">
+		<select id="mySelect"  name="singleoption" >
 			<option  value="1">Option one</option>
 			<option  value="2">Option two</option>
 			<option  value="3">Option three</option>
@@ -95,8 +142,7 @@
       <button class="btn btn-primary btn-md" type="submit">Validate</button>
     </div>
 	</form>
-</div>
-<table class="table table-bordered" id="monitorData>
+	<table class="table table-bordered monitorData>
   <thead class="thead-dark" style="background-color:#80808026; font-size: larger;">
     <tr>
       <th scope="col">SNO</th>
@@ -108,6 +154,32 @@
    
   </tbody>
 </table>
+<table class="table table-bordered monitorData>
+  <thead class="thead-dark" style="background-color:#80808026; font-size: larger;">
+    <tr>
+      <th scope="col">SNO</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody id="data-body2">
+   
+  </tbody>
+</table>
+<table class="table table-bordered monitorData>
+  <thead class="thead-dark" style="background-color:#80808026; font-size: larger;">
+    <tr>
+      <th scope="col">SNO</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody id="data-body3">
+   
+  </tbody>
+</table>
+</div>
+
 
 </body>
 </html>
