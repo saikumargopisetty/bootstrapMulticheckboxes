@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css"> 
+  <script>
+	$(document).ready(function(){
+	
+
+		$("#validateForm").hide();
+		$("#aftervalidateTextarea").hide();
+		
+		$("#frmAction").on("submit", function(event){
+			event.preventDefault();
+		console.log(window.location.origin);
+			var formValues= $(this).serialize();
+			var actionUrl = 'http://localhost:3000/api/postdata';
+	 
+			$.post(actionUrl, formValues, function(data){
+				// Display the returned data in browser
+				
+				$("#validateForm").show();
+				$.each(data, function(val, text) {
+					$("#multiple-checkboxes").append($('<option></option>').val(val).html(text));
+				});
+				$('#multiple-checkboxes').multiselect();
+			
+			});
+		});
+		
+		$("#validateForm").on("submit", function(event){
+			event.preventDefault();
+	 
+			var formValues= $(this).serialize();
+			var actionUrl = 'http://localhost:3000/api/postdata';
+	 
+			$.post(actionUrl, formValues, function(data){
+				// Display the returned data in browser
+				
+				$("#aftervalidateTextarea").show();
+				$("#afterValidateResult").append("After validation");
+			
+			});
+		});
+	});
+</script>
+</head>
+<body>
+<!-- Wrapper container -->
+<div class="container">
+
+  <form id="frmAction" class="form-group">
+    <div class="col-md-3 md-4">
+		<select id="mySelect"  name="singleoption" class="form-control">
+			<option  value="1">Option one</option>
+			<option  value="2">Option two</option>
+			<option  value="3">Option three</option>
+		</select>
+    </div>
+    <div class="d-grid">
+      <button class="btn btn-primary btn-md" type="submit">Submit</button>
+    </div>
+  </form>
+  
+  <form id="validateForm" class="form-group">
+	<!-- Email address input -->
+    <div class="col-md-3 md-4">
+      <select id="multiple-checkboxes" multiple="multiple" name="multiselect[]">  
+
+    </select> 
+	</div>	
+	<div class="d-grid">
+      <button class="btn btn-primary btn-md" type="submit">Validate</button>
+    </div>
+	</form>
+</div>
+<div class="container" id= "aftervalidateTextarea">
+  <div class="col-sm-6 jumbotron">
+    <h3 id="afterValidateResult"></h3>      
+  </div>    
+</div>
+
+
+</body>
+</html>
