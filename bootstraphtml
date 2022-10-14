@@ -44,7 +44,15 @@
 				// Display the returned data in browser
 				
 				$("#monitorData").show();		
-			
+				var data = [{
+				    id: 1,
+				    name: 'Item 1',
+				    price: '100'
+				}, {
+				    id: 2,
+				    name: 'Item 2',
+				    price: '200'
+				}]
 				for(var i=0;i<data.length;i++)
 				{
 					var tr="<tr>";
