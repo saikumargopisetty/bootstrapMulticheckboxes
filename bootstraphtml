@@ -43,8 +43,16 @@
 			$.post(actionUrl, formValues, function(data){
 				// Display the returned data in browser
 				
-				$("#aftervalidateTextarea").show();
-				$("#afterValidateResult").append("After validation");
+				$("#monitorData").show();		
+			
+				for(var i=0;i<data.length;i++)
+				{
+					var tr="<tr>";
+					var td1="<td>"+data[i]["id"]+"</td>";
+					var td2="<td>"+data[i]["name"]+"</td>";
+					var td3="<td>"+data[i]["price"]+"</td></tr>";
+				   $("#data-body").append(tr+td1+td2+td3); 
+				}  
 			
 			});
 		});
@@ -80,12 +88,18 @@
     </div>
 	</form>
 </div>
-<div class="container" id= "aftervalidateTextarea">
-  <div class="col-sm-6 jumbotron">
-    <h3 id="afterValidateResult"></h3>      
-  </div>    
-</div>
-
+<table class="table table-bordered" id="monitorData>
+  <thead class="thead-dark" style="background-color:#80808026; font-size: larger;">
+    <tr>
+      <th scope="col">SNO</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody id="data-body">
+   
+  </tbody>
+</table>
 
 </body>
 </html>
