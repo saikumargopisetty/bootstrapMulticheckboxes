@@ -18,29 +18,40 @@
 		
 		$("#frmAction").on("submit", function(event){
 			event.preventDefault();
-		console.log(window.location.origin);
+			$(".monitorData").hide();
+			//$("#multiple-checkboxes").multiselect("clearSelection");
 			var formValues= $(this).serialize();
 			var actionUrl = 'http://localhost:3000/api/postdata';
-	 
+			$("#multiple-checkboxes").empty();
 			$.post(actionUrl, formValues, function(data){
 				// Display the returned data in browser
-				
 				$("#validateForm").show();
+				var multipleCheckBoxes= '<select multiple="multiple" id="validationDropdown" name="multiselect[]"> ';
 				$.each(data, function(val, text) {
-					$("#multiple-checkboxes").append($('<option></option>').val(val).html(text));
+					multipleCheckBoxes+= '<option value="'+val+'">'+text+'</option>';
 				});
-				$('#multiple-checkboxes').multiselect();
+				multipleCheckBoxes+= '</select>';
+				$("#multiple-checkboxes").append(multipleCheckBoxes);
+				$('#validationDropdown').multiselect();
 			
 			});
 		});
 		
 		$("#validateForm").on("submit", function(event){
 			event.preventDefault();
-	 
-			var formValues= $(this).serialize();
+			$("#data-body").empty();
+			$("#data-body2").empty();
+			$("#data-body3").empty();
+			
+			var formValues= $("#validationDropdown").val();
+			var arrayData = "";
+			for(var i = 0; i < formValues.length; i++){
+			arrayData+= formValues[i]+',';
+			}
+			console.log(arrayData);
 			var actionUrl = 'http://localhost:3000/api/postdata';
 	 
-			$.post(actionUrl, formValues, function(data1){
+			$.post(actionUrl, {'data':arrayData}, function(data1){
 				// Display the returned data in browser
 				
 				$(".monitorData").show();		
@@ -131,18 +142,16 @@
     </div>
   </form>
   
-  <form id="validateForm" class="form-group">
+  <form id="validateForm" class="form-group" name="validationForm">
 	<!-- Email address input -->
-    <div class="col-md-3 md-4">
-      <select id="multiple-checkboxes" multiple="multiple" name="multiselect[]">  
-
-    </select> 
+    <div class="col-md-3 md-4" id="multiple-checkboxes" >
+      
 	</div>	
 	<div class="d-grid">
       <button class="btn btn-primary btn-md" type="submit">Validate</button>
     </div>
 	</form>
-	<table class="table table-bordered monitorData>
+	<table class="table table-bordered monitorData">
   <thead class="thead-dark" style="background-color:#80808026; font-size: larger;">
     <tr>
       <th scope="col">SNO</th>
@@ -154,7 +163,7 @@
    
   </tbody>
 </table>
-<table class="table table-bordered monitorData>
+<table class="table table-bordered monitorData">
   <thead class="thead-dark" style="background-color:#80808026; font-size: larger;">
     <tr>
       <th scope="col">SNO</th>
@@ -166,7 +175,7 @@
    
   </tbody>
 </table>
-<table class="table table-bordered monitorData>
+<table class="table table-bordered monitorData">
   <thead class="thead-dark" style="background-color:#80808026; font-size: larger;">
     <tr>
       <th scope="col">SNO</th>
