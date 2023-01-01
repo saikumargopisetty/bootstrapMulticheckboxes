@@ -8,8 +8,10 @@ app.use(express.urlencoded({extended: false}));
 
 sgMail.setApiKey('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')
 
-app.get('/', () =>  console.log('yes'));
-app.post('/sendmail', (req, res) => {
+app.get('/', (req, res) =>  {
+    console.log( req.get('host') );
+    res.send("Hello World!"+ req.get('host'))});
+    app.post('/sendmail', (req, res) => {
     const {} = req.body;
     const msg = {
         to: req.body.email, // Change to your recipient
@@ -32,5 +34,6 @@ app.post('/sendmail', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log('listing ');
+    console.log('listing ', port);
 })
+
